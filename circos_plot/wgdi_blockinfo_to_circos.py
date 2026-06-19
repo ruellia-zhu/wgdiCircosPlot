@@ -1221,7 +1221,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--gene-density-step", type=int, default=1_000_000)
     parser.add_argument("--link-opacity", type=float, default=0.22)
     parser.add_argument("--link-radius", default="0.850r")
-    parser.add_argument("--bezier-radius", default="0.16r")
+    parser.add_argument("--bezier-radius", default="0.08r", help="Bezier control radius for block ribbons. Smaller values keep ribbons from forming broad central bands.")
     parser.add_argument("--link-thickness", default="1p")
     parser.add_argument("--image-radius", default="1600p")
     parser.add_argument("--ideogram-radius", default="0.885r")
@@ -1232,7 +1232,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--hist-r1", default="0.995r")
     parser.add_argument("--label-radius", default="1.068r")
     parser.add_argument("--label-size", default="22p")
-    parser.add_argument("--spacing", default="0.012r")
+    parser.add_argument("--chrom-spacing", "--spacing", dest="spacing", default="0.006r", help="Circos spacing between adjacent chromosome sectors, e.g. 0.004r for tighter or 0.012r for wider gaps.")
     parser.add_argument("--angle-offset", default="-90")
 
     parser.add_argument("--conda-exe", default="/media/desk16/tl5024/miniconda3/bin/conda")

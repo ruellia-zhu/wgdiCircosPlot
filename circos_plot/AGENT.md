@@ -12,6 +12,8 @@
 - WGDI `.len` 第 2 列是真实染色体 bp 长度；染色体顺序必须严格等于 `.len` 文件顺序。
 - WGDI `.gff` 第 6 列是基因序号；`blockinfo.csv` 的 `block1/block2` 必须通过该序号映射回真实 bp 坐标。
 - 默认主图绘制 `mapped_anchor_count >= 50` 的主要共线性块。全量可映射 block 必须保存在 `all_block_links.tsv` 和 `links.all_blocks.txt`。
+- 默认染色体间距为 `--chrom-spacing 0.006r`；`--spacing` 是兼容别名。
+- 默认 ribbon 曲率为 `--bezier-radius 0.08r`，用于减轻区间 ribbon 在中心变粗的视觉效果。
 - `anchor_links.tsv` 只作审计，不参与绘图。
 - 不要删除主染色体，不要只保留有 link 的染色体，不要用视觉效果覆盖事实错误。
 
@@ -24,6 +26,8 @@
 3. 如果设置 `--max-links N` 且阈值后仍超过 N，则保留最大的 N 条 block ribbon。
 
 最大 block 的排序规则：`mapped_anchor_count` 多者优先；相同则映射 bp span 更长者优先；再相同则保留 blockinfo 中更靠前者。
+
+不要为了让中心更干净而把主图改成 anchor pair 细线或伪坐标。link 中心看似变粗通常是 interval ribbon 的 Bezier 几何和透明叠加造成的；优先调整 `--bezier-radius`、`--min-block-anchors` 或透明度。
 
 ## 当前 6 组输入
 
@@ -51,7 +55,7 @@ conda run -n circos circos -conf circos.conf
 每次改动后至少检查：
 
 ```bash
-OUT=circos_plot/results_v2_blockinfo50
+OUT=circos_plot/results_v3_spacing006_bezier008
 for d in "$OUT"/*
 do
   printf '%s ' "$(basename "$d")"
